@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 
 module.exports.authController = {
-    signin: async function (req, res) {
+    login: async function (req, res) {
         try {
             const { email, password } = req.body
             const user = await Users.findOne({ email })
@@ -16,7 +16,7 @@ module.exports.authController = {
                         role: user.role
                     }
                     const token = await jwt.sign(payload, process.env.SECRET_KEY, {expiresIn: '24h'});
-                    return res.json(token)
+                    return res.json({id: user._id, email, token})
                 }
             }
             return res.status(401).json({error: 'Неверные данные учетной записи'})
@@ -30,11 +30,11 @@ module.exports.authController = {
             if (email && password) {
                 const hashPassword = await bcrypt.hash(password, Number(process.env.SALT))
                 const user = await Users.create({ email, password: hashPassword })
-                return res.json(user)
+                return res.json('Успех')
             }
             res.status(400).json({error: 'Отсутствуют email/пароль'})
         } catch (err) {
-            res.status(400).json({error: 'Ошибка при регистрации пользователя'})
+            res.status(400).json({error: 'Ошибка при регистрации пользователя', message: err.message})
         }
     },
 }

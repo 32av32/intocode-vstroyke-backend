@@ -18,14 +18,22 @@ module.exports.adsController = {
             res.status(400).json({error: "Не удалось получить записи"})
         }
     },
+    getUserAds: async function(req, res) {
+        try {
+            const ads = await Ads.find({user: req.userId})
+            res.json(ads)
+        } catch (err) {
+            res.status(400).json({error: "Не удалось получить записи"})
+        }
+    },
     postAd: async function(req, res) {
         try {
-            const ad = await Ads.create({ ...req.body })
+            const ad = await Ads.create({ ...req.body, user: req.userId })
             if (req.imageName) {
                 ad.images.push(...req.imageName)
                 await ad.save()
-                res.json(ad)
             }
+            res.json(ad)
         } catch (err) {
             res.status(400).json({error: "Ошибка при добавлении записи", message: err.message})
         }

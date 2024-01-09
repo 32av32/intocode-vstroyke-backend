@@ -42,7 +42,8 @@ const AdSchema = new Schema({
         range: {
             min: { type: Number, min: 1 },
             max: { type: Number, max: 5 }
-        }
+        },
+        default: 0,
     }
 })
 

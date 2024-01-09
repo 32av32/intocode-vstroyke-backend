@@ -34,10 +34,14 @@ module.exports.usersController = {
             }
 
             const { name, organization, phone } = req.body
-            user = await Users.findByIdAndUpdate(req.params.id, { name, organization, phone, image: req.imageName })
+            user = await Users.findByIdAndUpdate(req.params.id, { name, organization, phone })
+            if (req.imageName) {
+                user.image = req.imageName
+                await user.save()
+            }
             res.json(user)
         } catch (err) {
-            res.status(400).json({error: 'Ошибка при изменении пользователя'})
+            res.status(400).json({error: 'Ошибка при изменении пользователя', message: err.message})
         }
     }
 }

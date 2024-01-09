@@ -6,8 +6,9 @@ const uploadImageMiddleware = require("../middlewares/uploadImage.middleware");
 const router = Router()
 
 
-router.get('', adsController.getAd)
-router.get('/:id', adsController.getAds)
+router.get('', adsController.getAds)
+router.get('/:id', adsController.getAd)
+router.get('/:user/ads', authMiddleware, adsController.getUserAds)
 router.post('', uploadImageMiddleware.array('images', 10), authMiddleware, adsController.postAd)
 router.delete('/:id', authMiddleware, adsController.deleteAd)
 router.patch('/:id', authMiddleware, adsController.patchAd)

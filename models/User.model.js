@@ -4,6 +4,7 @@ const UserSchema = new Schema({
     email: {
         type: String,
         required: true,
+        // match: '^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
         unique: true
     },
     password: {
@@ -31,7 +32,15 @@ const UserSchema = new Schema({
     },
     phone: {
         type: String,
-        match: '^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$',
+        // validate: [
+        //     {
+        //         validator: function (v) {
+        //             return v === '' || v.match('^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$')
+        //         },
+        //         message: 'Не соответствует шаблону'
+        //     }
+        // ]
+        // match: '^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$',
     },
     image: {
         type: String,
