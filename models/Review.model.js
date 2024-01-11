@@ -25,11 +25,11 @@ const ReviewSchema = new Schema({
     },
     qualityMark: {
         type: String,
-        enum : ['Низкое', 'Среднее', 'Высокое', 'Отличное'],
+        enum : ['low', 'middle', 'good', 'perfect'],
     },
     speedMark: {
         type: String,
-        enum : ['Низкое', 'Среднее', 'Высокое', 'Отличное'],
+        enum : ['low', 'middle', 'good', 'perfect'],
     },
     createdDate: {
         type: Date,

@@ -12,6 +12,8 @@ app.use('/auth', require('./routes/auth.route'))
 app.use('/users', require('./routes/users.route'))
 app.use('/categories', require('./routes/categories.route'))
 app.use('/ads', require('./routes/ads.route'))
+app.use('/reviews', require('./routes/reviews.route'))
+app.use('/favorites', require('./routes/favorites.route'))
 
 async function connectToMongoose(url) {
     try{

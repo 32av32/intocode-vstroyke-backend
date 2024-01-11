@@ -39,12 +39,13 @@ const AdSchema = new Schema({
     },
     rating: {
         type: Number,
-        range: {
-            min: { type: Number, min: 1 },
-            max: { type: Number, max: 5 }
-        },
         default: 0,
-    }
+    },
+    // favorites: {
+    //     type: [Schema.Types.ObjectId],
+    //     ref: 'User',
+    //     default: [],
+    // }
 })
 
 AdSchema.methods.toJSON = modelToJson
