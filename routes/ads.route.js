@@ -3,11 +3,12 @@ const { adsController } = require('../controllers/ads.controller')
 const {authMiddleware} = require("../middlewares/auth.middleware");
 const {adminMiddleware} = require("../middlewares/admin.middleware");
 const uploadImageMiddleware = require("../middlewares/uploadImage.middleware");
+const {optionalAuthMiddleware} = require("../middlewares/optionalAuth.middleware");
 const router = Router()
 
 
 router.get('', adsController.getAds)
-router.get('/:id', adsController.getAd)
+router.get('/:id', optionalAuthMiddleware, adsController.getAd)
 router.get('/:user/ads', authMiddleware, adsController.getUserAds)
 router.post('', uploadImageMiddleware.array('images', 10), authMiddleware, adsController.postAd)
 router.delete('/:id', authMiddleware, adsController.deleteAd)

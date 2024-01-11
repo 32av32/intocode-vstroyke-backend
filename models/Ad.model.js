@@ -41,11 +41,6 @@ const AdSchema = new Schema({
         type: Number,
         default: 0,
     },
-    // favorites: {
-    //     type: [Schema.Types.ObjectId],
-    //     ref: 'User',
-    //     default: [],
-    // }
 })
 
 AdSchema.methods.toJSON = modelToJson
