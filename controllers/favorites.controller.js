@@ -13,12 +13,22 @@ module.exports.favoritesController = {
     },
     deleteFavorite: async function (req, res) {
         try {
-            const favorite = await Favorites.findById(req.params.id)
-            await Favorites.findByIdAndDelete(req.params.id)
+            // const favorite = await Favorites.findById(req.params.id)
+            const favorite = await Favorites.findOne({ad: req.params.id, user: req.userId})
+            await Favorites.findByIdAndDelete(favorite._id)
             const ad = await Ads.findById(favorite.ad)
             res.json({...ad.toObject(), favorite: undefined})
         } catch (err) {
             res.status(400).json({error: 'Ошибка при удалении записи'})
         }
     },
+    getUserFavorites: async function(req, res) {
+        try {
+            const favorites = await Favorites.find({user: req.userId})
+            const ads = await Ads.find({'user': { $in: favorites.map(favorite => favorite.user) }})
+            res.json(ads)
+        } catch (err) {
+            res.status(400).json({error: 'Ошибка при добавлении записи'})
+        }
+    }
 }
