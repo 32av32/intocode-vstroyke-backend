@@ -4,7 +4,7 @@ const {authMiddleware} = require("../middlewares/auth.middleware");
 const router = Router()
 
 
-router.get('', reviewsController.getReviews)
+router.get('/:adId', reviewsController.getReviews)
 router.get('/:id', reviewsController.getReview)
 router.get('/user/reviews', authMiddleware, reviewsController.getUserReview)
 router.post('', authMiddleware, reviewsController.postReview)

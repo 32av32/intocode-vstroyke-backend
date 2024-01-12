@@ -13,7 +13,7 @@ module.exports.reviewsController = {
     },
     getReviews: async function(req, res) {
         try {
-            const reviews = await Reviews.find().populate('user', 'name image')
+            const reviews = await Reviews.find({ad: req.params.adId}).populate('user', 'name image')
             res.json(reviews)
         } catch (err) {
             res.status(400).json({error: "Не удалось получить записи"})

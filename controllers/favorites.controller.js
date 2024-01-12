@@ -13,8 +13,8 @@ module.exports.favoritesController = {
     },
     deleteFavorite: async function (req, res) {
         try {
-            // const favorite = await Favorites.findById(req.params.id)
-            const favorite = await Favorites.findOne({ad: req.params.id, user: req.userId})
+            const favorite = await Favorites.findById(req.params.id)
+            // const favorite = await Favorites.findOne({ad: req.params.id, user: req.userId})
             await Favorites.findByIdAndDelete(favorite._id)
             const ad = await Ads.findById(favorite.ad)
             res.json({...ad.toObject(), favorite: undefined})
@@ -25,7 +25,7 @@ module.exports.favoritesController = {
     getUserFavorites: async function(req, res) {
         try {
             const favorites = await Favorites.find({user: req.userId})
-            const ads = await Ads.find({'user': { $in: favorites.map(favorite => favorite.user) }})
+            const ads = await Ads.find({'_id': { $in: favorites.map(favorite => favorite.ad) }})
             res.json(ads)
         } catch (err) {
             res.status(400).json({error: 'Ошибка при добавлении записи'})
