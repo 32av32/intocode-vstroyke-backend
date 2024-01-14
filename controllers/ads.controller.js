@@ -16,7 +16,7 @@ module.exports.adsController = {
     },
     getAds: async function(req, res) {
         try {
-            const ads = await Ads.find().select('-user -description -address')
+            const ads = await Ads.find()
             res.json(ads)
         } catch (err) {
             res.status(400).json({error: "Не удалось получить записи"})
@@ -57,10 +57,12 @@ module.exports.adsController = {
     },
     patchAd: async function(req, res) {
         try {
-            const ad = await Ads.findByIdAndUpdate(req.params.id, { ...req.body })
+            await Ads.findByIdAndUpdate(req.params.id, { ...req.body })
+            // Без этого кода выдает старый результат
+            const ad = await Ads.findById(req.params.id)
             res.json(ad)
         } catch (err) {
-            res.status(400).json({error: "Ошибка при изменении записи"})
+            res.status(400).json({error: "Ошибка при изменении записи", message: err.message})
         }
     },
 }
