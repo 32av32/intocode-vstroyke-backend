@@ -6,8 +6,8 @@ const uploadProfileImage = require("../middlewares/uploadProfileImage.middleware
 const router = Router()
 
 router.get('', authMiddleware, adminMiddleware, usersController.getUsers)
-router.get('/:id', usersController.getUser)
+router.get('/account', authMiddleware, usersController.getUser)
 router.delete('/:id', authMiddleware, adminMiddleware, usersController.deleteUser)
-router.patch('/:id', uploadProfileImage.single('image'), authMiddleware, usersController.patchUser)
+router.patch('/account', uploadProfileImage.single('image'), authMiddleware, usersController.patchUser)
 
 module.exports = router;

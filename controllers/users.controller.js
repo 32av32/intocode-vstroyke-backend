@@ -11,7 +11,7 @@ module.exports.usersController = {
     },
     getUser: async function (req, res) {
         try {
-            const user = await Users.findById(req.params.id)
+            const user = await Users.findById(req.userId)
             res.json(user)
         } catch (err) {
             res.status(400).json({error: 'Не удалось получить пользователя', message: err.message})
@@ -27,14 +27,14 @@ module.exports.usersController = {
     },
     patchUser: async function (req, res) {
         try {
-            let user =  await Users.findById(req.params.id)
-
-            if (user._id.toString() !== req.userId && req.userRole !== 'admin') {
-                return res.status(403).json({error: 'У вас не прав на изменение данных'})
-            }
-
+            // let user = await Users.findById(req.userId)
+            //
+            // if (user._id.toString() !== req.userId && req.userRole !== 'admin') {
+            //     return res.status(403).json({error: 'У вас не прав на изменение данных'})
+            // }
             const { name, organization, phone } = req.body
-            user = await Users.findByIdAndUpdate(req.params.id, { name, organization, phone })
+            await Users.findByIdAndUpdate(req.params.id, { name, organization, phone })
+            const user = await Users.findById(req.userId)
             if (req.imageName) {
                 user.image = req.imageName
                 await user.save()
