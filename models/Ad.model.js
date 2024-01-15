@@ -1,4 +1,7 @@
 const mongoose = require('mongoose')
+const Reviews = require('../models/Review.model')
+const Questions = require('../models/Question.model')
+const Favorites = require('../models/Favorite.model')
 const Schema = mongoose.Schema
 const { modelToJson } = require("../utils");
 const AdSchema = new Schema({
@@ -44,5 +47,12 @@ const AdSchema = new Schema({
 })
 
 AdSchema.methods.toJSON = modelToJson
+
+AdSchema.post('findOneAndDelete', async function(doc, next) {
+    await Reviews.deleteMany({ad: doc._id})
+    await Questions.deleteMany({ad: doc._id})
+    await Favorites.deleteMany({ad: doc._id})
+    next();
+});
 
 module.exports = mongoose.model('Ad', AdSchema)

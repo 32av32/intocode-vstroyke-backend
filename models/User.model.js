@@ -1,4 +1,8 @@
 const mongoose = require('mongoose')
+const Reviews = require("./Review.model");
+const Questions = require("./Question.model");
+const Favorites = require("./Favorite.model");
+const Ads = require("./Ad.model");
 const Schema = mongoose.Schema
 const UserSchema = new Schema({
     email: {
@@ -54,5 +58,13 @@ UserSchema.methods.toJSON = function (...args) {
     delete modelObject.password;
     return modelObject;
 }
+
+UserSchema.post('findOneAndDelete', async function(doc, next) {
+    await Reviews.deleteMany({user: doc._id})
+    await Questions.deleteMany({user: doc._id})
+    await Ads.deleteMany({user: doc._id})
+    await Favorites.deleteMany({user: doc._id})
+    next();
+});
 
 module.exports = mongoose.model('User', UserSchema)

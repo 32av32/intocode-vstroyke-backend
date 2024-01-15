@@ -1,5 +1,6 @@
 const Ads = require('../models/Ad.model')
 const Favorites = require("../models/Favorite.model");
+const {deleteImage} = require("../utils");
 
 module.exports.adsController = {
     getAd: async function(req, res) {
@@ -50,7 +51,11 @@ module.exports.adsController = {
                 return res.status(403).json({error: 'У вас не прав на изменение данных'})
             }
             await Ads.findByIdAndDelete(req.params.id)
-            res.json('Record has been deleted')
+            for (let image of ad.images) {
+                await deleteImage(image, 'pictures')
+            }
+
+            res.json(ad._id)
         } catch (err) {
             res.status(400).json({error: "Ошибка при удалении записи", message: err.message})
         }
