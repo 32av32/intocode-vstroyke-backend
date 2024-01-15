@@ -13,8 +13,8 @@ module.exports.favoritesController = {
     },
     deleteFavorite: async function (req, res) {
         try {
-            const favorite = await Favorites.findById(req.params.id)
-            // const favorite = await Favorites.findOne({ad: req.params.id, user: req.userId})
+            // const favorite = await Favorites.findById(req.params.id)
+            const favorite = await Favorites.findOne({ad: req.params.adId, user: req.userId})
             await Favorites.findByIdAndDelete(favorite._id)
             const ad = await Ads.findById(favorite.ad)
             res.json({...ad.toObject(), favorite: undefined})
