@@ -1,5 +1,6 @@
 const Ads = require('../models/Ad.model')
 const Favorites = require("../models/Favorite.model");
+const Orders = require("../models/Order.model");
 const {deleteImage} = require("../utils");
 
 module.exports.adsController = {
@@ -8,7 +9,8 @@ module.exports.adsController = {
             const ad = await Ads.findById(req.params.id).populate('user', '-password -role -__v')
             if (req.userId) {
                 const favorite = await Favorites.findOne({ad: ad._id, user: req.userId})
-                return res.json({...ad.toObject(), favorite: favorite?._id})
+                const order = await Orders.findOne({ad: ad._id, user: req.userId})
+                return res.json({...ad.toObject(), favorite: favorite?._id, orderStatus: order?.status})
             }
             return res.json(ad)
         } catch (err) {

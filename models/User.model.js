@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const Reviews = require("./Review.model");
 const Questions = require("./Question.model");
 const Favorites = require("./Favorite.model");
+const Orders = require("./Order.model");
 const Ads = require("./Ad.model");
 const Schema = mongoose.Schema
 const UserSchema = new Schema({
@@ -64,6 +65,7 @@ UserSchema.post('findOneAndDelete', async function(doc, next) {
     await Questions.deleteMany({user: doc._id})
     await Ads.deleteMany({user: doc._id})
     await Favorites.deleteMany({user: doc._id})
+    await Orders.deleteMany({user: doc._id})
     next();
 });
 

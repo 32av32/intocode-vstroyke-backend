@@ -42,5 +42,13 @@ module.exports.usersController = {
         } catch (err) {
             res.status(400).json({error: 'Ошибка при изменении пользователя', message: err.message})
         }
+    },
+    getProfile: async function (req, res) {
+        try {
+            const user = await Users.findById(req.params.id).select('_id name organization createdDate')
+            res.json(user)
+        } catch (err) {
+            res.status(400).json({error: 'Не удалось получить пользователя', message: err.message})
+        }
     }
 }

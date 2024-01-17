@@ -12,6 +12,9 @@ const QuestionSchema = new Schema({
         ref: 'Ad',
         required: true,
     },
+    answer: {
+        type: String,
+    },
     createdDate: {
         type: Date,
         default: Date.now,

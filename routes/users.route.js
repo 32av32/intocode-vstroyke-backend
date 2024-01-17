@@ -7,6 +7,7 @@ const router = Router()
 
 router.get('', authMiddleware, adminMiddleware, usersController.getUsers)
 router.get('/account', authMiddleware, usersController.getUser)
+router.get('/:id', authMiddleware, usersController.getProfile)
 router.delete('/:id', authMiddleware, adminMiddleware, usersController.deleteUser)
 router.patch('/account', uploadProfileImage.single('image'), authMiddleware, usersController.patchUser)
 
