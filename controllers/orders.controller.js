@@ -12,8 +12,8 @@ module.exports.ordersController = {
     },
     getOrders: async function (req, res) {
         try {
-            const ad = await Orders.findById(req.params.id).populate('ad', '-__v')
-            return res.json(ad)
+            const orders = await Orders.find({user: req.userId}).populate('ad', '-__v')
+            return res.json(orders)
         } catch (err) {
             res.status(400).json({error: "Не удалось получить запись", message: err.message})
         }

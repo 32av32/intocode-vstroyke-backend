@@ -26,10 +26,10 @@ module.exports.authController = {
     },
     signup: async function (req, res) {
         try {
-            const { email, password } = req.body
+            const { email, password, name } = req.body
             if (email && password) {
                 const hashPassword = await bcrypt.hash(password, Number(process.env.SALT))
-                const user = await Users.create({ email, password: hashPassword })
+                const user = await Users.create({ email, name, password: hashPassword })
                 return res.json('Успех')
             }
             res.status(400).json({error: 'Отсутствуют email/пароль'})

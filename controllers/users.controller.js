@@ -31,7 +31,7 @@ module.exports.usersController = {
     patchUser: async function (req, res) {
         try {
             const { name, organization, phone } = req.body
-            await Users.findByIdAndUpdate(req.params.id, { name, organization, phone })
+            await Users.findByIdAndUpdate(req.userId, { name, organization, phone })
             const user = await Users.findById(req.userId)
             if (req.imageName) {
                 user.image && await deleteImage(user.image, 'profile')
