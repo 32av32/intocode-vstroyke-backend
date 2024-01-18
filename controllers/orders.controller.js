@@ -26,6 +26,14 @@ module.exports.ordersController = {
             res.status(400).json({error: "Ошибка при добавлении записи", message: err.message})
         }
     },
+    deleteOrder: async function (req, res) {
+        try {
+            const order = await Orders.findByIdAndDelete(req.params.id)
+            return res.json(order)
+        } catch (err) {
+            res.status(400).json({error: "Не удалось удалить запись", message: err.message})
+        }
+    },
     // patchOrder: async function(req, res) {
     //     try {
     //         await Orders.findByIdAndUpdate(req.params.id, { ...req.body })
