@@ -16,7 +16,7 @@ module.exports.authController = {
                         role: user.role
                     }
                     const token = await jwt.sign(payload, process.env.SECRET_KEY, {expiresIn: '24h'});
-                    return res.json({id: user._id, email, token})
+                    return res.json({user, token})
                 }
             }
             return res.status(401).json({error: 'Неверные данные учетной записи'})
