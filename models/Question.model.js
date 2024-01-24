@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 const {modelToJson} = require("../utils");
 const Schema = mongoose.Schema
 const QuestionSchema = new Schema({
+    questionText: {
+        type: String,
+        required: true
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
