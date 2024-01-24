@@ -10,7 +10,6 @@ module.exports.questionsController = {
             res.status(400).json({error: "Не удалось получить записи"})
         }
     },
-
     postQuestions: async function(req, res) {
         try {
             const addQuestion = await QuestionModel.create({ ...req.body, user: req.userId })
@@ -19,6 +18,12 @@ module.exports.questionsController = {
             res.status(400).json({error: "Ошибка при добавлении записи", message: err.message})
         }
     },
-
-    
+    patchQuestion: async function(req, res) {
+        try {
+            const addQuestion = await QuestionModel.findByIdAndUpdate(req.params.id, { ...req.body})
+            res.json(addQuestion)
+        } catch (err) {
+            res.status(400).json({error: "Ошибка при добавлении записи", message: err.message})
+        }
+    },
 }

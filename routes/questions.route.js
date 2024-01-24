@@ -6,6 +6,7 @@ const router = Router()
 
 
 router.get('/:adId', questionsController.getQuestions)
+router.patch('/:id', authMiddleware, questionsController.patchQuestion)
 router.post('', authMiddleware, questionsController.postQuestions)
 
 
