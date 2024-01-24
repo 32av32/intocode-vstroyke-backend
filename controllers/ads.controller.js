@@ -27,7 +27,8 @@ module.exports.adsController = {
     },
     getUserAds: async function(req, res) {
         try {
-            const ads = await Ads.find({user: req.userId})
+            // const ads = await Ads.find({user: req.userId})
+            const ads = await Ads.find({user: req.params.user})
             res.json(ads)
         } catch (err) {
             res.status(400).json({error: "Не удалось получить записи", message: err.message})

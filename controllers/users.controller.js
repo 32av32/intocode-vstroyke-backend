@@ -45,7 +45,7 @@ module.exports.usersController = {
     },
     getProfile: async function (req, res) {
         try {
-            const user = await Users.findById(req.params.id).select('_id name organization createdDate')
+            const user = await Users.findById(req.params.id).select('_id name image organization createdDate')
             res.json(user)
         } catch (err) {
             res.status(400).json({error: 'Не удалось получить пользователя', message: err.message})
