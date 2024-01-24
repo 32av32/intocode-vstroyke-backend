@@ -19,10 +19,15 @@ module.exports.adsController = {
     },
     getAds: async function(req, res) {
         try {
-            const ads = await Ads.find()
+            const { category, title } = req.query
+            const query = {}
+            if (category) {
+                query.category = category
+            }
+            const ads = await Ads.find(title ? { ...query, title: {$regex: title, $options: 'i'} } : {...query})
             res.json(ads)
         } catch (err) {
-            res.status(400).json({error: "Не удалось получить записи"})
+            res.status(400).json({error: "Не удалось получить записи", message: err.message})
         }
     },
     getUserAds: async function(req, res) {
