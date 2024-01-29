@@ -1,6 +1,7 @@
 const QuestionModel = require("../models/Question.model")
 
 
+
 module.exports.questionsController = {
     getQuestions: async function(req, res) {
         try {
@@ -20,7 +21,7 @@ module.exports.questionsController = {
     },
     patchQuestion: async function(req, res) {
         try {
-            const addQuestion = await QuestionModel.findByIdAndUpdate(req.params.id, { ...req.body})
+            const addQuestion = await QuestionModel.findByIdAndUpdate(req.params.id, { ...req.body}, {new: true})
             res.json(addQuestion)
         } catch (err) {
             res.status(400).json({error: "Ошибка при добавлении записи", message: err.message})
